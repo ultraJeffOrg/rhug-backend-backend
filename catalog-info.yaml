@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rhug-backend-rhug-backend-poi-backend-app-dev
+  annotations:
+    argocd/app-name: rhug-backend-rhug-backend-poi-backend-app-dev
+    backstage.io/kubernetes-id: rhug-backend-rhug-backend-poi-backend-app-dev
+    backstage.io/kubernetes-namespace: rhug-backend
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=rhug-backend-rhug-backend-poi-backend-app-dev'
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: ultraJeffOrg/rhug-backend-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.cluster-gqd95.gqd95.sandbox1540.opentlc.com/dev-pipelines/ns/rhug-backend/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.cluster-gqd95.gqd95.sandbox1540.opentlc.com/k8s/ns/rhug-backend/deployments/rhug-backend-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.cluster-gqd95.gqd95.sandbox1540.opentlc.com/#https://github.com/ultraJeffOrg/rhug-backend-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:default/ultrajeff"
+  system: workshop-system-rhug-backend
+  providesApis:
+    - backend-api-rhug-backend
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-rhug-backend
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:default/ultrajeff"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-rhug-backend
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://rhug-backend-poi-backend-app-rhug-backend.apps.cluster-gqd95.gqd95.sandbox1540.opentlc.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/ultraJeffOrg/rhug-backend-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:default/ultrajeff"
+  system: workshop-system-rhug-backend
+  definition:
+    $text: https://github.com/ultraJeffOrg/rhug-backend-backend/tree/main/src/main/resources/META-INF/openapi.yaml
